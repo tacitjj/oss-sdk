@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.dmhxm</groupId>
     <artifactId>dxm-oss-sdk</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>dxm-oss-sdk</name>
     <description>dxm-oss-sdk</description>
     <properties>
@@ -36,7 +36,7 @@
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-            <version>3.13.1</version>
+            <version>3.10.2</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -48,16 +48,28 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.14</version>
+            <version>5.3.10</version>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
             <id>dxm</id>
-            <url>http://nexus.mijiaoyu.cn/repository/maven-public/</url>
+            <name>maven-pubilc</name>
+            <url>http://nexus.mijiaoyu.cn/repository/maven-public</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>http://nexus.mijiaoyu.cn/repository/maven-public</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>http://nexus.mijiaoyu.cn/repository/maven-public</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <plugins>

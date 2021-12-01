@@ -2,6 +2,7 @@ package com.dmhxm.oss.configuration;
 
 import com.dmhxm.oss.DxmOSSClient;
 import com.dmhxm.oss.configuration.properties.OSSProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,12 +19,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(OSSProperties.class)
-@ConditionalOnProperty(
-        prefix = "oss",
-        name = "isOpen",
-        havingValue = "true"
-)
 @ConditionalOnWebApplication
+@Slf4j
 public class OSSAutoConfiguration {
 
     private final OSSProperties ossProperties;
@@ -34,26 +31,9 @@ public class OSSAutoConfiguration {
 
     @Bean(name = "dxmOSSClient")
     public DxmOSSClient dxmOSSClient() {
+        log.info("加载oss配置" + ossProperties);
         return new DxmOSSClient(ossProperties);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //    @Bean(name = "ossClientFactory")

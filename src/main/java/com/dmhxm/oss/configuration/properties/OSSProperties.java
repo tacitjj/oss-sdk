@@ -20,7 +20,7 @@ public class OSSProperties {
     /**
      * 是否开启OSS
      */
-    private Boolean isOpen = false;
+    private Integer isOpen = 0;
 
     /**
      * 是否开启临时授权

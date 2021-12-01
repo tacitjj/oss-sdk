@@ -17,21 +17,11 @@ public class UploadPartObj implements Serializable {
 
     List<UploadPartThread> uploadPartThreads = Collections.synchronizedList(new ArrayList<>());
 
-    boolean result = true;
-
     public List<UploadPartThread> getUploadPartThreads() {
         return uploadPartThreads;
     }
 
     public void setUploadPartThreads(List<UploadPartThread> uploadPartThreads) {
         this.uploadPartThreads = uploadPartThreads;
-    }
-
-    public boolean isResult() {
-        return result;
-    }
-
-    public void setResult(boolean result) {
-        this.result = result;
     }
 }

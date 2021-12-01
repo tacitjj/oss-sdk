@@ -3,13 +3,12 @@ package com.dmhxm.oss.thread;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.UploadPartRequest;
 import com.aliyun.oss.model.UploadPartResult;
+import com.dmhxm.oss.DxmOSSClient;
 import com.dmhxm.oss.model.MyPartETag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.concurrent.Callable;
 
 /**
@@ -22,7 +21,7 @@ public class UploadPartThread implements Callable<UploadPartThread>, Serializabl
     private static final long serialVersionUID = 1L;
 
     private final OSSClient client;
-    private final File uploadFile;
+    private final MultipartFile uploadFile;
     private final String bucket;
     private final String object;
     private final long start;
@@ -33,9 +32,9 @@ public class UploadPartThread implements Callable<UploadPartThread>, Serializabl
     private MyPartETag myPartETag;
 
     public UploadPartThread(OSSClient client, String bucket, String object,
-                            File uploadFile, String uploadId, int partId,
+                            MultipartFile uploadFile, String uploadId, int partId,
                             long start, long partSize) {
-        this.client = client;
+        this.client=client;
         this.uploadFile = uploadFile;
         this.bucket = bucket;
         this.object = object;
@@ -47,30 +46,30 @@ public class UploadPartThread implements Callable<UploadPartThread>, Serializabl
 
     @Override
     public UploadPartThread call() {
-        InputStream in = null;
+        InputStream inputStream = null;
         try {
-            in = new FileInputStream(uploadFile);
-            long skip = in.skip(start);
-
+            inputStream = uploadFile.getInputStream();
+            long skip = inputStream.skip(start);
             UploadPartRequest uploadPartRequest = new UploadPartRequest();
             uploadPartRequest.setBucketName(bucket);
             uploadPartRequest.setKey(object);
             uploadPartRequest.setUploadId(uploadId);
-            uploadPartRequest.setInputStream(in);
+            uploadPartRequest.setInputStream(inputStream);
             uploadPartRequest.setPartSize(size);
             uploadPartRequest.setPartNumber(partId);
             UploadPartResult uploadPartResult = client.uploadPart(uploadPartRequest);
             //MyPartETag是对uploadPartResult.getPartETag()的返回值PartETag的封装
             myPartETag = new MyPartETag(uploadPartResult.getPartETag());
         } catch (Exception e) {
-            e.printStackTrace();
-            log.error("==" + e.getMessage());
+//            e.printStackTrace();
+//            client.shutdown();
+            log.warn("上传失败！" + e.getMessage());
         } finally {
-            if (in != null) {
+            if(inputStream!=null){
                 try {
-                    in.close();
-                } catch (Exception e) {
-                    log.error("====关闭流失败：" + e.getMessage());
+                    inputStream.close();
+                } catch (IOException e) {
+                    log.warn("关闭文件流异常");
                 }
             }
         }

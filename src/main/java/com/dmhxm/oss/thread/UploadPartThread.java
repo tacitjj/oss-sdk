@@ -34,7 +34,7 @@ public class UploadPartThread implements Callable<UploadPartThread>, Serializabl
     public UploadPartThread(OSSClient client, String bucket, String object,
                             MultipartFile uploadFile, String uploadId, int partId,
                             long start, long partSize) {
-        this.client=client;
+        this.client = client;
         this.uploadFile = uploadFile;
         this.bucket = bucket;
         this.object = object;
@@ -58,14 +58,13 @@ public class UploadPartThread implements Callable<UploadPartThread>, Serializabl
             uploadPartRequest.setPartSize(size);
             uploadPartRequest.setPartNumber(partId);
             UploadPartResult uploadPartResult = client.uploadPart(uploadPartRequest);
+            log.warn("分片============" + partId + "完成！");
             //MyPartETag是对uploadPartResult.getPartETag()的返回值PartETag的封装
             myPartETag = new MyPartETag(uploadPartResult.getPartETag());
         } catch (Exception e) {
-//            e.printStackTrace();
-//            client.shutdown();
             log.warn("上传失败！" + e.getMessage());
         } finally {
-            if(inputStream!=null){
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (IOException e) {

@@ -34,37 +34,4 @@ public class OSSAutoConfiguration {
         log.info("加载oss配置" + ossProperties);
         return new DxmOSSClient(ossProperties);
     }
-
-
-//    @Bean(name = "ossClientFactory")
-//    public DxmOSS ossClientFactory() {
-//        OSSClientFactoryBean ossClientFactoryBean = new OSSClientFactoryBean();
-//        ossClientFactoryBean.setIsSTS(ossProperties.getIsSTS());
-//        if (StringUtils.isNotBlank(ossProperties.getEndPoint())) {
-//            ossClientFactoryBean.setEndPoint(ossProperties.getEndPoint());
-//        }
-//        if (StringUtils.isNotBlank(ossProperties.getAccessKeyId())) {
-//            ossClientFactoryBean.setAccessKeyId(ossProperties.getAccessKeyId());
-//        }
-//        if (StringUtils.isNotBlank(ossProperties.getAccessKeySecret())) {
-//            ossClientFactoryBean.setAccessKeySecret(ossProperties.getAccessKeySecret());
-//        }
-//        if (StringUtils.isNotBlank(ossProperties.getRoleArn())) {
-//            ossClientFactoryBean.setRoleArn(ossProperties.getRoleArn());
-//        }
-//        if (StringUtils.isNotBlank(ossProperties.getBucketName())) {
-//            ossClientFactoryBean.setBucketName(ossProperties.getBucketName());
-//        }
-//        if (ossProperties.getMinPartFileSize() != null && ossProperties.getMinPartFileSize() > 0) {
-//            ossClientFactoryBean.setMinPartFileSize(ossProperties.getMinPartFileSize());
-//        }
-//        if(ossProperties.getSinglePartFileSize() != null && ossProperties.getSinglePartFileSize() > 0){
-//            ossClientFactoryBean.setSinglePartFileSize(ossProperties.getSinglePartFileSize());
-//        }
-//
-//        if(ossProperties.getIsSTS()){
-////            OSSClientSTSFactory
-//        }
-//        return new DxmOSSClient();
-//    }
 }

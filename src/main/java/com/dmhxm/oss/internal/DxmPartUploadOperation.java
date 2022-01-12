@@ -22,16 +22,15 @@ import java.util.concurrent.*;
 @Slf4j
 public class DxmPartUploadOperation {
 
-//    private static ExecutorService pool;
-
     public ResponseResult<String> partUpLoad(MultipartFile file, long fileSize, String fileName, CannedAccessControlList cannedAcl, OSS oss, OSSProperties ossProperties) {
         //默认五十兆
-        long bytePartSize = 5 * 1024L * 1024L;
+        long bytePartSize = 20 * 1024L * 1024L;
         UploadPartObj uploadPartObj = new UploadPartObj();
         //初始化
-        String uploadId = initMultipartUpload(oss, ossProperties.getBucketName(), fileName, "DigestUtil.md5Hex(stream)");
+        String uploadId = initMultipartUpload(oss, ossProperties.getBucketName(), fileName);
         //需要上传的文件分块数
         int partCount = (int) calPartCount(fileSize, bytePartSize);
+        log.warn("分片数量============" + partCount);
         for (int i = 0; i < partCount; i++) {
             long start = bytePartSize * i;
             long curPartSize = Math.min(bytePartSize, fileSize - start);
@@ -87,8 +86,8 @@ public class DxmPartUploadOperation {
         return partCount;
     }
 
-    private static String initMultipartUpload(OSS client, String bucketName, String key, String fileMD5Str) {
-        ObjectMetadata objectMetadata = new ObjectMetadata();
+    private static String initMultipartUpload(OSS client, String bucketName, String key) {
+//        ObjectMetadata objectMetadata = new ObjectMetadata();
 //        objectMetadata.getUserMetadata().put("x-oss-meta-my-md5", fileMD5Str);
         InitiateMultipartUploadRequest initUploadRequest = new InitiateMultipartUploadRequest(bucketName, key);
         InitiateMultipartUploadResult initResult = client.initiateMultipartUpload(initUploadRequest);

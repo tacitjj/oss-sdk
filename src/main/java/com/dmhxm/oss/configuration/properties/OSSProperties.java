@@ -18,16 +18,6 @@ import org.springframework.stereotype.Component;
 public class OSSProperties {
 
     /**
-     * 是否开启OSS
-     */
-    private Integer isOpen = 0;
-
-    /**
-     * 是否开启临时授权
-     */
-    private Boolean isSTS = false;
-
-    /**
      * endPoint
      */
     private String endPoint;
@@ -56,12 +46,7 @@ public class OSSProperties {
      */
     private Integer corePoolSize;
     /**
-     * 最小分片文件大小阈值
+     * 最小分片文件大小阈值(单位M)
      */
     private Integer minPartFileSize;
-
-    /**
-     * 上传失败重试次数
-     */
-    private Integer retry = 3;
 }

@@ -91,4 +91,8 @@ public class AliSTSUtil {
             log.info("RequestId" + e.getRequestId());
         }
     }
+
+    public static void main(String[] args) {
+
+    }
 }

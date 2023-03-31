@@ -1,2 +1,2 @@
 # oss-sdk
-oss多线程上传文件
+oss Multithreaded file upload
